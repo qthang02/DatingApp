@@ -1,4 +1,6 @@
 ﻿using API.Data;
+using API.Repositories;
+using API.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Extensions;
@@ -11,6 +13,10 @@ public static class ApplicationServiceExtensions
         {
             opt.UseSqlite(config.GetConnectionString("connectionString"));
         });
+        services.AddCors();
+        services.AddScoped<ITokenService, TokenService>();
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 
         return services;
