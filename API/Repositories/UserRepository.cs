@@ -49,4 +49,9 @@ public class UserRepository : IUserRepository
             .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
             .SingleOrDefaultAsync())!;
     }
+    
+    public async Task<bool> UserExit(string username)
+    {
+        return await _context.Users!.AnyAsync(x => x.UserName == username.ToLower());
+    }
 }
