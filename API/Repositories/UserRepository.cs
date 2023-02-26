@@ -54,4 +54,9 @@ public class UserRepository : IUserRepository
     {
         return await _context.Users!.AnyAsync(x => x.UserName == username.ToLower());
     }
+
+    public void AddUser(AppUser user)
+    {
+        _context.Users!.Add(user);
+    }
 }

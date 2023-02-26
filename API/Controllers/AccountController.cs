@@ -35,7 +35,7 @@ public class AccountController : BaseApiController
         user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password!));
         user.PasswordSalt = hmac.Key;
         
-        _userRepository.Update(user);
+        _userRepository.AddUser(user);
         await _userRepository.SaveAllAsync();
 
         return new UserDto
