@@ -1,12 +1,12 @@
 ﻿using API.DTOs;
 using API.Entities;
 using API.Extensions;
+using API.Helper;
 using API.Repositories;
 using API.Services;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualBasic;
 
 namespace API.Controllers;
 
@@ -25,10 +25,14 @@ public class UsersController : BaseApiController
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
+    public async Task<ActionResult<PagedList<MemberDto>>> GetUsers([FromQuery]UserParams userParams)
     {
-        var users = await _userRepository.GetMembersAsync();
+        var users = await _userRepository.GetMembersAsync(userParams);
+        
+        Response.AddPaginationHeader(new PaginationHeader(users.CurrentPage, users.PageSize, 
+            users.TotalCount, users.TotalPage));
 
+        
         return Ok(users);
     }
 
