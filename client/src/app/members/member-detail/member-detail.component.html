@@ -1,0 +1,74 @@
+<div class="row" *ngIf="member">
+
+  <div class="col-4">
+
+    <div class="card">
+      <img src="{{member.photoUrl || './assets/user/png'}}" alt="{{member.userName}}" class="card-img-top img-thumbnail">
+
+      <div class="card-body">
+        <div>
+          <strong>Location:</strong>
+          <p>{{member.city}}, {{member.country}}</p>
+        </div>
+
+        <div>
+          <strong>Age:</strong>
+          <p>{{member.age}}</p>
+        </div>
+
+        <div>
+          <strong>Last Active:</strong>
+          <p>{{member.lastActive}}</p>
+        </div>
+
+        <div>
+          <strong>Member Since:</strong>
+          <p>{{member.created}}</p>
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <div class="btn-group d-flex">
+          <button class="btn btn-primary">Like</button>
+          <button class="btn btn-success">Messages</button>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="col-8">
+    <p-tabView  class="inline-block">
+      <p-tabPanel header="about {{member.knownAs}}">
+        <h2>Description</h2>
+        <p>{{member.introduction}}</p>
+        <h2>LookingFor</h2>
+        <p>{{member.lookingFor}}</p>
+      </p-tabPanel>
+      <p-tabPanel header="Interests">
+        <h2>Interests</h2>
+        <p>{{member.interests}}</p>
+      </p-tabPanel>
+      <p-tabPanel header="Photos">
+
+        <!--        <p-galleria [value]="images" [containerStyle]="{'max-width': '640px'}" [numVisible]="5"-->
+        <!--                    [circular]="true" [showItemNavigators]="true" [showThumbnails]="false">-->
+        <!--          <ng-template pTemplate="item" let-item>-->
+        <!--            <img [src]="item.photoUrl" style="width: 100%; height: 450px; display: block;" />-->
+        <!--          </ng-template>-->
+        <!--          <ng-template pTemplate="thumbnail" let-item>-->
+        <!--            <div class="grid grid-nogutter justify-content-center">-->
+        <!--              <img [src]="item.photoUrl" style="display: block;" />-->
+        <!--            </div>-->
+        <!--          </ng-template>-->
+        <!--        </p-galleria>-->
+
+      </p-tabPanel>
+      <p-tabPanel header="Messages">
+        this is messages tab
+      </p-tabPanel>
+    </p-tabView>
+  </div>
+
+</div>
