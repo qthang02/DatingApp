@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {AccountService} from "../_services/account.service";
 import {Router} from "@angular/router";
 import {MenuItem, MessageService} from "primeng/api";
@@ -19,7 +19,7 @@ export class NavComponent {
         icon:'pi pi-fw pi-user',
         items: [
           {label: 'Sign Out', icon: 'pi pi-sign-out', command: (() => this.logout())},
-          {label: 'Edit Profile', icon:'pi pi-user-edit', routerLink: "/member/edit"},
+          {label: 'Edit Profile', icon:'pi pi-user-edit', url: "/member/edit"},
         ]
       },
     ];
