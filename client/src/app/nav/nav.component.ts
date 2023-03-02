@@ -1,21 +1,18 @@
 import {Component, OnInit} from '@angular/core';
-import {MenuItem} from "primeng/api";
 import {AccountService} from "../_services/account.service";
 import {Router} from "@angular/router";
+import {MenuItem, MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.css']
 })
-export class NavComponent implements OnInit{
+export class NavComponent {
   model: any = {};
-  item: any = [];
+  item: MenuItem[];
 
-  constructor(public accountService: AccountService, private router: Router) {
-  }
-
-  ngOnInit() {
+  constructor(public accountService: AccountService, private router: Router, private messageService: MessageService) {
     this.item = [
       {
         label: 'Users',
@@ -28,9 +25,13 @@ export class NavComponent implements OnInit{
     ];
   }
 
+
   login(){
     this.accountService.login(this.model).subscribe({
-      next:_ => this.router.navigateByUrl('/members')
+      next:_ => {
+        this.router.navigateByUrl('/members');
+        this.messageService.add({severity:'success', summary:'Service Message', detail:'Via MessageService'});
+      }
     })
   }
 

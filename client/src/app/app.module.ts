@@ -23,6 +23,15 @@ import {CalendarModule} from "primeng/calendar";
 import {TabViewModule} from "primeng/tabview";
 import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
 import {FileUploadModule} from "primeng/fileupload";
+import {LoadingInterceptor} from "./_interceptor/loading.interceptor";
+import {ProgressSpinnerModule} from "primeng/progressspinner";
+import { NotFoundComponent } from './_errors/not-found/not-found.component';
+import { ServerErrorComponent } from './_errors/server-error/server-error.component';
+import { TestErrorsComponent } from './_errors/test-errors/test-errors.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import {ToastModule} from "primeng/toast";
+import {ErrorInterceptor} from "./_interceptor/error.interceptor";
+import {MessageService} from "primeng/api";
 
 @NgModule({
   declarations: [
@@ -38,7 +47,10 @@ import {FileUploadModule} from "primeng/fileupload";
     MessagesComponent,
     TextInputComponent,
     DatePickerComponent,
-    PhotoEditorComponent
+    PhotoEditorComponent,
+    NotFoundComponent,
+    ServerErrorComponent,
+    TestErrorsComponent
   ],
   imports: [
     BrowserModule,
@@ -50,10 +62,17 @@ import {FileUploadModule} from "primeng/fileupload";
     AppRoutingModule,
     CalendarModule,
     TabViewModule,
-    FileUploadModule
+    FileUploadModule,
+    ProgressSpinnerModule,
+    FontAwesomeModule,
+    FontAwesomeModule,
+    ToastModule
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true},
+    {provide: MessageService}
   ],
   bootstrap: [AppComponent]
 })
