@@ -28,7 +28,6 @@ import {ProgressSpinnerModule} from "primeng/progressspinner";
 import { NotFoundComponent } from './_errors/not-found/not-found.component';
 import { ServerErrorComponent } from './_errors/server-error/server-error.component';
 import { TestErrorsComponent } from './_errors/test-errors/test-errors.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {ToastModule} from "primeng/toast";
 import {ErrorInterceptor} from "./_interceptor/error.interceptor";
 import {MessageService} from "primeng/api";
@@ -64,9 +63,7 @@ import {MessageService} from "primeng/api";
     TabViewModule,
     FileUploadModule,
     ProgressSpinnerModule,
-    FontAwesomeModule,
-    FontAwesomeModule,
-    ToastModule
+    ToastModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
