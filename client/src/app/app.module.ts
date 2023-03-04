@@ -33,6 +33,7 @@ import {ErrorInterceptor} from "./_interceptor/error.interceptor";
 import {MessageService} from "primeng/api";
 import {PaginatorModule} from "primeng/paginator";
 import {SelectButtonModule} from "primeng/selectbutton";
+import {TimeagoModule} from "ngx-timeago";
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import {SelectButtonModule} from "primeng/selectbutton";
     ProgressSpinnerModule,
     ToastModule,
     PaginatorModule,
-    SelectButtonModule
+    SelectButtonModule,
+    TimeagoModule.forRoot()
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
