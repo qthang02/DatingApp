@@ -31,6 +31,7 @@ import { TestErrorsComponent } from './_errors/test-errors/test-errors.component
 import {ToastModule} from "primeng/toast";
 import {ErrorInterceptor} from "./_interceptor/error.interceptor";
 import {MessageService} from "primeng/api";
+import {PaginatorModule} from "primeng/paginator";
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import {MessageService} from "primeng/api";
     FileUploadModule,
     ProgressSpinnerModule,
     ToastModule,
+    PaginatorModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
