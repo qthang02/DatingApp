@@ -13,4 +13,5 @@ public interface IUserRepository
     Task<MemberDto> GetMemberAsync(string username);
     Task<bool> UserExit(string username);
     void AddUser(AppUser user);
+    Task<AppUser> GetUserByIdAsync(int id);
 }

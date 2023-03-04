@@ -21,6 +21,8 @@ export class MemberListComponent implements OnInit{
     {value: 'male', display: 'Males'},
     {value: 'female', display: 'Females'}
   ]
+  stateOptions: any[];
+  value1: string = "lastActive";
 
   constructor(private memberService: MemberService, private accountService: AccountService) {
     this.accountService.currentUser$.pipe(take(1)).subscribe({
@@ -30,7 +32,8 @@ export class MemberListComponent implements OnInit{
           this.user = user;
         }
       }
-    })
+    });
+    this.stateOptions = [{label: 'last Active', value: 'lastActive'}, {label: 'Newest Members', value: 'created'}];
   }
 
   ngOnInit() {

@@ -32,6 +32,7 @@ import {ToastModule} from "primeng/toast";
 import {ErrorInterceptor} from "./_interceptor/error.interceptor";
 import {MessageService} from "primeng/api";
 import {PaginatorModule} from "primeng/paginator";
+import {SelectButtonModule} from "primeng/selectbutton";
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import {PaginatorModule} from "primeng/paginator";
     FileUploadModule,
     ProgressSpinnerModule,
     ToastModule,
-    PaginatorModule
+    PaginatorModule,
+    SelectButtonModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
