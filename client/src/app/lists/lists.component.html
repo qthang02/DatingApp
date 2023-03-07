@@ -1,1 +1,22 @@
-<p>lists works!</p>
+<div class="text-center mt-3">
+  <h2>{{predicate == "liked" ? "Members I Like" : "Members Who Like Me"}}</h2>
+</div>
+
+<div class="container mt-3">
+  <div class="d-flex">
+    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+      <label class="btn btn-outline-primary" [class.active]="predicate === 'liked'">
+        <input type="radio" name="options" id="option1" (click)="loadLikes('liked')" autocomplete="off"> Liked
+      </label>
+      <label class="btn btn-outline-primary" [class.active]="predicate === 'likedBy'">
+        <input type="radio" name="options" id="option2" (click)="loadLikes('likedBy')" autocomplete="off"> Liked By
+      </label>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-2" *ngFor="let member of members">
+      <app-member-card [member]="member"></app-member-card>
+    </div>
+  </div>
+</div>

@@ -3,7 +3,6 @@ import {Member} from "../../_models/member";
 import {MemberService} from "../../_services/member.service";
 import {Pagination} from "../../_models/pagination";
 import {UserParams} from "../../_models/userParams";
-import {User} from "../../_models/user";
 
 @Component({
   selector: 'app-member-list',
@@ -18,12 +17,10 @@ export class MemberListComponent implements OnInit{
     {value: 'male', display: 'Males'},
     {value: 'female', display: 'Females'}
   ]
-  stateOptions: any[];
   value1: string = "lastActive";
 
   constructor(private memberService: MemberService) {
     this.userParams = this.memberService.getUserParams();
-    this.stateOptions = [{label: 'last Active', value: 'lastActive'}, {label: 'Newest Members', value: 'created'}];
   }
 
   ngOnInit() {

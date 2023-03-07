@@ -44,8 +44,14 @@
 
     <div class="col">
       <div class="btn-group float-end">
-        <p-selectButton [options]="stateOptions" [(ngModel)]="value1" optionLabel="label" optionValue="value" (onChange)="loadMembers()"></p-selectButton>
-
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+          <label class="btn btn-outline-primary" [class.active]="value1 === 'lastActive'">
+            <input type="radio" name="options" id="option1" (click)="value1 = 'lastActive'" autocomplete="off"> last Active
+          </label>
+          <label class="btn btn-outline-primary" [class.active]="value1 === 'created'">
+            <input type="radio" name="options" id="option2" (click)="value1 = 'created'" autocomplete="off"> Newest Members
+          </label>
+        </div>
       </div>
     </div>
 

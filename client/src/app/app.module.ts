@@ -34,6 +34,7 @@ import {MessageService} from "primeng/api";
 import {PaginatorModule} from "primeng/paginator";
 import {SelectButtonModule} from "primeng/selectbutton";
 import {TimeagoModule} from "ngx-timeago";
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import {TimeagoModule} from "ngx-timeago";
     PhotoEditorComponent,
     NotFoundComponent,
     ServerErrorComponent,
-    TestErrorsComponent
+    TestErrorsComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule,
@@ -69,7 +71,7 @@ import {TimeagoModule} from "ngx-timeago";
     ToastModule,
     PaginatorModule,
     SelectButtonModule,
-    TimeagoModule.forRoot()
+    TimeagoModule.forRoot(),
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
