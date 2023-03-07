@@ -34,7 +34,6 @@ import {MessageService} from "primeng/api";
 import {PaginatorModule} from "primeng/paginator";
 import {SelectButtonModule} from "primeng/selectbutton";
 import {TimeagoModule} from "ngx-timeago";
-import { SidebarComponent } from './sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +53,6 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     NotFoundComponent,
     ServerErrorComponent,
     TestErrorsComponent,
-    SidebarComponent
   ],
   imports: [
     BrowserModule,
