@@ -50,8 +50,8 @@
   </div>
 
   <div class="col-8">
-    <p-tabView  class="inline-block">
-      <p-tabPanel header="about {{member.knownAs}}">
+    <mat-tab-group  class="inline-block">
+      <mat-tab label="about {{member.knownAs}}">
         <form #editForm="ngForm" (ngSubmit)="updateMember()" id="editForm">
           <h4 class="mt-2">Description</h4>
           <textarea name="introduction" class="form-control" rows="6" [(ngModel)]="member.introduction"></textarea>
@@ -67,11 +67,11 @@
             <input type="text" name="country" class="form-control mx-2" [(ngModel)]="member.country" id="country">
           </div>
         </form>
-      </p-tabPanel>
-      <p-tabPanel header="Edit Photos">
+      </mat-tab>
+      <mat-tab label="Edit Photos">
         <app-photo-editor [member]="member"></app-photo-editor>
-      </p-tabPanel>
-    </p-tabView>
+      </mat-tab>
+    </mat-tab-group>
   </div>
 
 </div>

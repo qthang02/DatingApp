@@ -26,7 +26,15 @@
          style="width:5%;"
          class="bg-info rounded-circle">
 
-    <p-menubar [model]="item" *ngIf="(accountService.currentUser$ | async)"></p-menubar>
+    <button mat-button
+            [matMenuTriggerFor]="menu"
+            *ngIf="(accountService.currentUser$ | async) as user">
+      welcome {{user.knownAs}}
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="logout()"><i class="pi pi-sign-out"></i> Logout</button>
+      <button mat-menu-item routerLink="/member/edit"> <i class="pi pi-user-edit"></i> Edit Profile</button>
+    </mat-menu>
 
 
     <form *ngIf="!(accountService.currentUser$ | async)" #loginForm="ngForm" class="d-flex" (ngSubmit)="login()" autocomplete="off">

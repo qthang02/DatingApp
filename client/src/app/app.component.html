@@ -1,6 +1,6 @@
 <app-nav></app-nav>
 <div class="container">
-  <p-progressSpinner *ngIf="busyService.isShowProgressSpinner" class="position-absolute top-50 start-50 translate-middle"> </p-progressSpinner>
+  <mat-spinner *ngIf="busyService.isShowProgressSpinner" class="position-absolute top-50 start-50 translate-middle z-3"></mat-spinner>
   <p-toast position="bottom-right" [baseZIndex]="5000"></p-toast>
   <router-outlet></router-outlet>
 </div>

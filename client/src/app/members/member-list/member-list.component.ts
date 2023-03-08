@@ -3,6 +3,7 @@ import {Member} from "../../_models/member";
 import {MemberService} from "../../_services/member.service";
 import {Pagination} from "../../_models/pagination";
 import {UserParams} from "../../_models/userParams";
+import {PageEvent} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-member-list',
@@ -17,7 +18,8 @@ export class MemberListComponent implements OnInit{
     {value: 'male', display: 'Males'},
     {value: 'female', display: 'Females'}
   ]
-  value1: string = "lastActive";
+
+
 
   constructor(private memberService: MemberService) {
     this.userParams = this.memberService.getUserParams();
@@ -39,6 +41,7 @@ export class MemberListComponent implements OnInit{
       this.memberService.getMembers(this.userParams).subscribe({
         next: response => {
           if (response.result && response.pagination) {
+            console.log(this.userParams?.orderBy);
             this.members = response.result;
             this.pagination = response.pagination;
           }
@@ -47,12 +50,10 @@ export class MemberListComponent implements OnInit{
     }
   }
 
-  paginate(event: any) {
-    if(this.userParams) {
-      this.userParams.pageNumber = event.page + 1;
-      this.userParams.pageSize = event.rows;
-      this.memberService.setUserParams(this.userParams);
-      this.loadMembers();
-    }
+  handlePageEvent(event: PageEvent) {
+    this.userParams!.pageNumber = event.pageIndex + 1;
+    this.userParams!.pageSize = event.pageSize;
+    this.memberService.setUserParams(this.userParams!);
+    this.loadMembers();
   }
 }

@@ -44,14 +44,10 @@
 
     <div class="col">
       <div class="btn-group float-end">
-        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-          <label class="btn btn-outline-primary" [class.active]="value1 === 'lastActive'">
-            <input type="radio" name="options" id="option1" (click)="value1 = 'lastActive'" autocomplete="off"> last Active
-          </label>
-          <label class="btn btn-outline-primary" [class.active]="value1 === 'created'">
-            <input type="radio" name="options" id="option2" (click)="value1 = 'created'" autocomplete="off"> Newest Members
-          </label>
-        </div>
+        <mat-button-toggle-group [(ngModel)]="userParams.orderBy" (change)="loadMembers()">
+          <mat-button-toggle value="lastActive">Last Active</mat-button-toggle>
+          <mat-button-toggle value="created">Newest Members</mat-button-toggle>
+        </mat-button-toggle-group>
       </div>
     </div>
 
@@ -65,5 +61,10 @@
   </div>
 </div>
 <div *ngIf="pagination">
-  <p-paginator [rows]="pagination.itemsPerPage" [totalRecords]="pagination.totalItems" [pageLinkSize]="10" (onPageChange)="paginate($event)"></p-paginator>
+  <mat-paginator [length]="pagination.totalItems"
+                 [pageSize]="pagination.totalPages"
+                 [pageSizeOptions]="[5]"
+                 [hidePageSize]="true"
+                 (page)="handlePageEvent($event)">
+  </mat-paginator>
 </div>

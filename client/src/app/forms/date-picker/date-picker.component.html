@@ -1,10 +1,21 @@
-<p-calendar [(ngModel)]="date"
-            [class.is-invalid]="control.touched && control.invalid"
-            class="form-control ms-3"
-            [formControl]="control"
-            placeholder="{{label}}"
-            dateFormat="dd.mm.yy">
-</p-calendar>
+<!--<p-calendar [(ngModel)]="date"-->
+<!--            [class.is-invalid]="control.touched && control.invalid"-->
+<!--            class="form-control ms-3"-->
+<!--            [formControl]="control"-->
+<!--            placeholder="{{label}}"-->
+<!--            dateFormat="dd.mm.yy">-->
+<!--</p-calendar>-->
+<mat-form-field appearance="fill">
+  <mat-label>Choose a date</mat-label>
+  <input matInput
+         [matDatepicker]="picker"
+         placeholder="{{label}}"
+         [formControl]="control"
+         [class.is-invalid]="control.touched && control.invalid"
+         [(ngModel)]="date">
+  <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker></mat-datepicker>
+</mat-form-field>
 <div *ngIf="control.errors?.['required']" class="invalid-feedback">
   {{label}} is required
 </div>

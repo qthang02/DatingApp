@@ -14,15 +14,20 @@ export class ListsComponent implements OnInit {
   pageNumber = 1;
   pageSize = 5;
   pagination: Pagination | undefined;
+  options: any[] = [];
 
-  constructor(private memberService: MemberService) { }
-
-  ngOnInit() {
-    this.loadLikes(this.predicate);
+  constructor(private memberService: MemberService) {
+    this.options = [
+      {label: 'Likers', value: 'liked'},
+      {label: 'Likees', value: 'likedBy'}
+    ]
   }
 
-  loadLikes(predicate: string) {
-    this.predicate = predicate;
+  ngOnInit() {
+    this.loadLikes();
+  }
+
+  loadLikes() {
     this.memberService.getLikes(this.predicate, this.pageNumber, this.pageSize).subscribe({
       next: response => {
         this.members =  response.result;

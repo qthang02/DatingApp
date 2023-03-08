@@ -8,7 +8,6 @@ import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {MenubarModule} from "primeng/menubar";
 import { NavComponent } from './nav/nav.component';
 import { ListsComponent } from './lists/lists.component';
 import { MemberCardComponent } from './members/member-card/member-card.component';
@@ -19,21 +18,26 @@ import { MessagesComponent } from './messages/messages.component';
 import {AppRoutingModule} from "./app-routing.module";
 import { TextInputComponent } from './forms/text-input/text-input.component';
 import { DatePickerComponent } from './forms/date-picker/date-picker.component';
-import {CalendarModule} from "primeng/calendar";
-import {TabViewModule} from "primeng/tabview";
 import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
 import {FileUploadModule} from "primeng/fileupload";
 import {LoadingInterceptor} from "./_interceptor/loading.interceptor";
-import {ProgressSpinnerModule} from "primeng/progressspinner";
 import { NotFoundComponent } from './_errors/not-found/not-found.component';
 import { ServerErrorComponent } from './_errors/server-error/server-error.component';
 import { TestErrorsComponent } from './_errors/test-errors/test-errors.component';
 import {ToastModule} from "primeng/toast";
 import {ErrorInterceptor} from "./_interceptor/error.interceptor";
 import {MessageService} from "primeng/api";
-import {PaginatorModule} from "primeng/paginator";
-import {SelectButtonModule} from "primeng/selectbutton";
 import {TimeagoModule} from "ngx-timeago";
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
+import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatMenuModule} from "@angular/material/menu";
+import {MatButtonModule} from "@angular/material/button";
+import {MatTabsModule} from "@angular/material/tabs";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
+import {MatNativeDateModule} from "@angular/material/core";
 
 @NgModule({
   declarations: [
@@ -60,16 +64,20 @@ import {TimeagoModule} from "ngx-timeago";
     HttpClientModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    MenubarModule,
     AppRoutingModule,
-    CalendarModule,
-    TabViewModule,
     FileUploadModule,
-    ProgressSpinnerModule,
     ToastModule,
-    PaginatorModule,
-    SelectButtonModule,
     TimeagoModule.forRoot(),
+    MatButtonToggleModule,
+    MatPaginatorModule,
+    MatMenuModule,
+    MatButtonModule,
+    MatTabsModule,
+    MatProgressSpinnerModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatNativeDateModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
