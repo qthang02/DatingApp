@@ -28,7 +28,6 @@ import {ToastModule} from "primeng/toast";
 import {ErrorInterceptor} from "./_interceptor/error.interceptor";
 import {MessageService} from "primeng/api";
 import {TimeagoModule} from "ngx-timeago";
-import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatMenuModule} from "@angular/material/menu";
 import {MatButtonModule} from "@angular/material/button";
@@ -69,7 +68,6 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
     FileUploadModule,
     ToastModule,
     TimeagoModule.forRoot(),
-    MatButtonToggleModule,
     MatPaginatorModule,
     MatMenuModule,
     MatButtonModule,

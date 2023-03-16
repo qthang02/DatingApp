@@ -4,10 +4,18 @@
 
 <div class="container mt-3">
   <div class="d-flex">
-    <mat-button-toggle-group #group="matButtonToggleGroup" [(ngModel)]="predicate" (change)="loadLikes()">
-      <mat-button-toggle value="liked">Members I Like</mat-button-toggle>
-      <mat-button-toggle value="likedBy">Members Who Like Me</mat-button-toggle>
-    </mat-button-toggle-group>
+    <button
+      type="button"
+      class="btn btn-primary"
+      [(ngModel)]="predicate"
+      btnRadio="liked"
+      (click)="loadLikes()">Members I Like</button>
+    <button
+      type="button"
+      class="btn btn-primary"
+      [(ngModel)]="predicate"
+      btnRadio="likedBy"
+      (click)="loadLikes()">Members Who Like Me</button>
   </div>
 
   <div class="row mt-3">
