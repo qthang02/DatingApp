@@ -20,21 +20,14 @@
     </ul>
 
 
-    <img *ngIf="(accountService.currentUser$ | async) as user"
-         src="{{user.photoUrl}}"
-         alt="photo"
-         style="width:5%;"
-         class="bg-info rounded-circle">
-
-    <button mat-button
-            [matMenuTriggerFor]="menu"
-            *ngIf="(accountService.currentUser$ | async) as user">
-      welcome {{user.knownAs}}
-    </button>
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="logout()"><i class="pi pi-sign-out"></i> Logout</button>
-      <button mat-menu-item routerLink="/member/edit"> <i class="pi pi-user-edit"></i> Edit Profile</button>
-    </mat-menu>
+    <div class="dropdown" *ngIf="(accountService.currentUser$  | async) as user" dropdown>
+      <img src="{{user.photoUrl || './assets/user.png'}}" alt="user photo">
+      <a class="dropdown-toggle text-black ms-2" dropdownToggle>Welcome {{user.knownAs}}</a>
+      <div class="dropdown-menu mt-3" *dropdownMenu>
+        <a class="dropdown-item" routerLink="/member/edit">Edit Profile</a>
+        <a class="dropdown-item" (click)="logout()">Logout</a>
+      </div>
+    </div>
 
 
     <form *ngIf="!(accountService.currentUser$ | async)" #loginForm="ngForm" class="d-flex" (ngSubmit)="login()" autocomplete="off">

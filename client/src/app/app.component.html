@@ -1,6 +1,12 @@
 <app-nav></app-nav>
 <div class="container">
-  <mat-spinner *ngIf="busyService.isShowProgressSpinner" class="position-absolute top-50 start-50 translate-middle z-3"></mat-spinner>
+  <ngx-spinner
+    bdColor = "rgba(0, 0, 0, 0.8)"
+    size = "medium"
+    color = "#fff"
+    type = "ball-clip-rotate"
+    [fullScreen] = "true">
+  </ngx-spinner>
   <p-toast position="bottom-right" [baseZIndex]="5000"></p-toast>
   <router-outlet></router-outlet>
 </div>

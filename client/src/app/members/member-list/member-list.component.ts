@@ -3,7 +3,6 @@ import {Member} from "../../_models/member";
 import {MemberService} from "../../_services/member.service";
 import {Pagination} from "../../_models/pagination";
 import {UserParams} from "../../_models/userParams";
-import {PageEvent} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-member-list',
@@ -50,10 +49,11 @@ export class MemberListComponent implements OnInit{
     }
   }
 
-  handlePageEvent(event: PageEvent) {
-    this.userParams!.pageNumber = event.pageIndex + 1;
-    this.userParams!.pageSize = event.pageSize;
-    this.memberService.setUserParams(this.userParams!);
-    this.loadMembers();
+  pageChanged(event: any) {
+    if(this.userParams) {
+      this.userParams.pageNumber = event.page;
+      this.memberService.setUserParams(this.userParams);
+      this.loadMembers();
+    }
   }
 }

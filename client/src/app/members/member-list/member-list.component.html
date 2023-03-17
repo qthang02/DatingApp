@@ -71,10 +71,17 @@
   </div>
 </div>
 <div *ngIf="pagination">
-  <mat-paginator [length]="pagination.totalItems"
-                 [pageSize]="pagination.totalPages"
-                 [pageSizeOptions]="[5]"
-                 [hidePageSize]="true"
-                 (page)="handlePageEvent($event)">
-  </mat-paginator>
+  <div class="d-flex justify-content-center" *ngIf="pagination">
+    <pagination [boundaryLinks]="true"
+                [totalItems]="pagination.totalItems"
+                [itemsPerPage]="pagination.itemsPerPage"
+                [maxSize]="10"
+                [(ngModel)]="pagination.currentPage"
+                previousText="&lsaquo;"
+                nextText="&rsaquo;"
+                (pageChanged)="pageChanged($event)"
+                firstText="&laquo;"
+                lastText="&raquo;">
+    </pagination>
+  </div>
 </div>

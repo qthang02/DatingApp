@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AccountService} from "./_services/account.service";
 import {User} from "./_models/user";
-import {BusyService} from "./_services/busy.service";
 
 @Component({
   selector: 'app-root',
@@ -11,7 +10,7 @@ import {BusyService} from "./_services/busy.service";
 export class AppComponent implements OnInit{
   title = 'Dating App';
 
-  constructor(private accountService: AccountService, public busyService: BusyService) {}
+  constructor(private accountService: AccountService) {}
 
   ngOnInit() {
     this.setCurrentUser()

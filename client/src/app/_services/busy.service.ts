@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import {NgxSpinnerService} from "ngx-spinner";
 
 @Injectable({
   providedIn: 'root'
@@ -6,11 +7,12 @@ import { Injectable } from '@angular/core';
 export class BusyService {
   busyRequestCount = 0;
   isShowProgressSpinner = false;
-  constructor() { }
+  constructor(private spinner: NgxSpinnerService) { }
 
   busy() {
     this.busyRequestCount++;
     this.isShowProgressSpinner = true;
+    this.spinner.show();
   }
 
   idle() {
@@ -18,6 +20,7 @@ export class BusyService {
     if (this.busyRequestCount <= 0) {
       this.busyRequestCount = 0;
       this.isShowProgressSpinner = false;
+      this.spinner.hide();
     }
   }
 }
