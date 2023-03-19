@@ -1,4 +1,4 @@
-<div class="row" *ngIf="member">
+<div class="row">
 
   <div class="col-4">
 
@@ -30,7 +30,7 @@
       <div class="card-footer">
         <div class="btn-group d-flex">
           <button class="btn btn-primary">Like</button>
-          <button class="btn btn-success">Messages</button>
+          <button (click)="selectTab('Messages')" class="btn btn-success">Messages</button>
         </div>
       </div>
 
@@ -39,22 +39,22 @@
   </div>
 
   <div class="col-8">
-    <tabset class="inline-block">
-      <tab heading="About {{member.knownAs}}">
+    <tabset class="member-tabset" #memberTabs>
+      <tab heading="About {{member.knownAs}}" (selectTab)="onTabActivated($event)">
         <h2>Description</h2>
         <p>{{member.introduction}}</p>
         <h2>LookingFor</h2>
         <p>{{member.lookingFor}}</p>
       </tab>
-      <tab heading="Interests">
+      <tab heading="Interests" (selectTab)="onTabActivated($event)">
         <h2>Interests</h2>
         <p>{{member.interests}}</p>
       </tab>
-      <tab heading="Photos">
+      <tab heading="Photos" (selectTab)="onTabActivated($event)">
         <h2>Photos</h2>
       </tab>
-      <tab heading="Messages">
-        <h2>Messages</h2>
+      <tab heading="Messages" (selectTab)="onTabActivated($event)">
+        <app-member-messages [messages]="messages" [username]="member.userName" ></app-member-messages>
       </tab>
     </tabset>
   </div>

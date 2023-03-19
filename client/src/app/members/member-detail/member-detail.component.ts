@@ -1,7 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Member} from "../../_models/member";
 import {MemberService} from "../../_services/member.service";
 import {ActivatedRoute} from "@angular/router";
+import {TabDirective, TabsetComponent} from "ngx-bootstrap/tabs";
+import {MessageService} from "../../_services/message.service";
+import {Message} from "../../_models/Message";
 
 @Component({
   selector: 'app-member-detail',
@@ -9,12 +12,25 @@ import {ActivatedRoute} from "@angular/router";
   styleUrls: ['./member-detail.component.css']
 })
 export class MemberDetailComponent implements OnInit{
-  member: Member | undefined;
-  //images: [{}];
-  constructor(private memberService: MemberService, private route: ActivatedRoute) {
-  }
+  @ViewChild('memberTabs', {static: true}) memberTabs?: TabsetComponent;
+  member: Member = {} as Member;
+  activeTab?: TabDirective;
+  messages: Message[] = [];
+
+  constructor(private memberService: MemberService, private route: ActivatedRoute, private messageService: MessageService) {}
+
   ngOnInit() {
-    this.loadMember();
+    this.route.data.subscribe({
+      next: data => this.member = data['member']
+    });
+
+    this.route.queryParams.subscribe({
+      next: params => {
+        params['tab'] && this.selectTab(params['tab']);
+      }
+    });
+
+    this.loadMessages();
   }
 
   loadMember() {
@@ -23,8 +39,28 @@ export class MemberDetailComponent implements OnInit{
     this.memberService.getMember(username).subscribe({
       next: member => {
         this.member = member
-        //this.images = member.photos
       }
     });
+  }
+
+  selectTab(header: string) {
+    if(this.memberTabs) {
+      this.memberTabs.tabs.find(x => x.heading === header)!.active = true;
+    }
+  }
+
+  loadMessages() {
+    if (this.member) {
+      this.messageService.getMessageThread(this.member.userName).subscribe(messages => {
+        this.messages = messages;
+      })
+    }
+  }
+
+  onTabActivated(data: TabDirective) {
+    this.activeTab = data;
+    if(this.activeTab?.heading === 'Messages' && this.member) {
+      this.loadMember();
+    }
   }
 }

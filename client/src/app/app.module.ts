@@ -34,6 +34,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import {NgxSpinnerModule} from "ngx-spinner";
+import { MemberMessagesComponent } from './members/member-messages/member-messages.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import {NgxSpinnerModule} from "ngx-spinner";
     NotFoundComponent,
     ServerErrorComponent,
     TestErrorsComponent,
+    MemberMessagesComponent,
   ],
   imports: [
     BrowserModule,

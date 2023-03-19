@@ -1,22 +1,22 @@
 <div class="mb-4 d-flex">
   <div class="btn-group" name="container">
-    <button class="btn btn-primary" btnRadio="Unread" [ngModel]="container" (click)="loadMessages()">
+    <button class="btn btn-primary"  btnRadio="Unread" [(ngModel)]="container" (click)="loadMessages()">
       <i class="pi pi-envelope">Unread</i>
     </button>
-    <button class="btn btn-primary" btnRadio="Inbox" [ngModel]="container" (click)="loadMessages()">
-      <i class="pi pi-envelope">Inbox</i>
+    <button class="btn btn-primary" btnRadio="Inbox" [(ngModel)]="container" (click)="loadMessages()">
+      <i class="pi pi-inbox">Inbox</i>
     </button>
-    <button class="btn btn-primary" btnRadio="Outbox" [ngModel]="container" (click)="loadMessages()">
-      <i class="pi pi-envelope">Outbox</i>
+    <button class="btn btn-primary" btnRadio="Outbox" [(ngModel)]="container" (click)="loadMessages()">
+      <i class="pi pi-send">Outbox</i>
     </button>
   </div>
 </div>
 
-<div class="row" *ngIf="!messages">
+<div class="row" *ngIf="!messages || messages.length == 0">
   <h3>No Messages</h3>
 </div>
 
-<div class="row" *ngIf="messages">
+<div class="row" *ngIf="messages && messages.length > 0">
   <table class="table table-hover" style="cursor: pointer;">
     <thead>
     <tr>
@@ -26,8 +26,14 @@
       <th style="width: 20%;"></th>
     </tr>
     </thead>
-    <tbody>
-    <tr *ngFor="let message of messages">
+    <tbody class="align-middle">
+    <tr [hidden]="loading"
+        *ngFor="let message of messages"
+        routerLink="{{container === 'Outbox'
+        ? '/members/' + message.recipientUsername
+        : '/members/' + message.senderUsername}}"
+        [queryParams]="{tab: 'Messages'}"
+    >
       <td>{{message.content}}</td>
       <td>
        <div *ngIf="container == 'Outbox'">
@@ -36,12 +42,13 @@
        </div>
         <div *ngIf="container != 'Outbox'">
           <img class="img-circle rounded-circle me-2" src="{{message.senderPhotoUrl}}" alt="recipient photo">
-          <strong>{{message.senderPhotoUrl | titlecase}}</strong>
+          <strong>{{message.senderUsername | titlecase}}</strong>
         </div>
       </td>
       <td>{{message.messageSent | timeago}}</td>
       <td>
-        <button class="btn btn-danger">
+        <button (click)="$event.stopPropagation()"
+          (click)="deleteMessage(message.id)" class="btn btn-danger">
           <i class="pi pi-trash"></i>
         </button>
       </td>
@@ -49,7 +56,7 @@
   </table>
 </div>
 
-<div class="d-flex justify-content-center" *ngIf="pagination">
+<div class="d-flex justify-content-center" *ngIf="!loading && pagination && messages && messages.length > 0">
   <pagination [boundaryLinks]="true"
               [totalItems]="pagination.totalItems"
               [itemsPerPage]="pagination.itemsPerPage"
