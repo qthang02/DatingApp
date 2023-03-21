@@ -1,6 +1,7 @@
 ﻿using API.DTOs;
 using API.Entities;
 using API.Helper;
+using Microsoft.AspNetCore.Identity;
 
 namespace API.Repositories;
 
@@ -12,6 +13,7 @@ public interface IUserRepository
     Task<PagedList<MemberDto>> GetMembersAsync(UserParams userParams);
     Task<MemberDto> GetMemberAsync(string username);
     Task<bool> UserExit(string username);
-    void AddUser(AppUser user);
+    Task<IdentityResult> AddUser(AppUser user, string password);
+    Task<bool> CheckUserLogin(AppUser user, string password);
     Task<AppUser> GetUserByIdAsync(int id);
 }

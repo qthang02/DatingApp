@@ -18,5 +18,5 @@ public class RegisterDto
     public string? Country { get; set; }
     [Required]
     [StringLength(8, MinimumLength = 4)]
-    public string? Password { get; set; }
+    public string Password { get; set; }
 }

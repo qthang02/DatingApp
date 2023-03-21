@@ -3,6 +3,7 @@ using API.Entities;
 using API.Repositories;
 using API.Services;
 using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -30,8 +31,9 @@ public class AccountController : BaseApiController
         user.UserName = registerDto.UserName!.ToLower();
        
         
-        _userRepository.AddUser(user);
-        await _userRepository.SaveAllAsync();
+        var rs = await _userRepository.AddUser(user, registerDto.Password);
+
+        if (!rs.Succeeded) return BadRequest(rs.Errors);
 
         return new UserDto
         {
@@ -48,6 +50,10 @@ public class AccountController : BaseApiController
         var user = await _userRepository.GetUserByUsernameAsync(loginDto.UserName!);
         
         if (user == null) return Unauthorized("Invalid UserName");
+        
+        var rs = await _userRepository.CheckUserLogin(user, loginDto.Password!);
+        
+        if (!rs) return Unauthorized("Invalid Password");
         
         return new UserDto
         {

@@ -4,6 +4,7 @@ using API.Entities;
 using API.Helper;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Repositories;
@@ -12,11 +13,13 @@ public class UserRepository : IUserRepository
 {
     private readonly DataContext _context;
     private readonly IMapper _mapper;
+    private readonly UserManager<AppUser> _userManager;
 
-    public UserRepository(DataContext context, IMapper mapper)
+    public UserRepository(DataContext context, IMapper mapper, UserManager<AppUser> userManager)
     {
         _context = context;
         _mapper = mapper;
+        _userManager = userManager;
     }
     
     public void Update(AppUser user)
@@ -31,7 +34,7 @@ public class UserRepository : IUserRepository
 
     public async Task<AppUser> GetUserByUsernameAsync(string username)
     {
-        return (await _context.Users!
+        return (await _userManager.Users!
             .Include(p => p.Photos)
             .SingleOrDefaultAsync(x => x.UserName == username))!;
     }
@@ -73,11 +76,16 @@ public class UserRepository : IUserRepository
         return await _context.Users!.AnyAsync(x => x.UserName == username.ToLower());
     }
 
-    public void AddUser(AppUser user)
+    public async Task<IdentityResult> AddUser(AppUser user, string password)
     {
-        _context.Users!.Add(user);
+        return await _userManager.CreateAsync(user, password);
     }
-    
+
+    public async Task<bool> CheckUserLogin(AppUser user, string password)
+    {
+        return await _userManager.CheckPasswordAsync(user, password);
+    }
+
     public async Task<AppUser> GetUserByIdAsync(int id)
     {
         return (await _context.Users!.FindAsync(id))!;
