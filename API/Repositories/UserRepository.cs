@@ -90,4 +90,9 @@ public class UserRepository : IUserRepository
     {
         return (await _context.Users!.FindAsync(id))!;
     }
+
+    public async Task<IdentityResult> AddUserRole(AppUser user, string role)
+    {
+        return await _userManager.AddToRoleAsync(user, role);
+    }
 }

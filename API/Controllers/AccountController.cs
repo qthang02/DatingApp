@@ -38,7 +38,7 @@ public class AccountController : BaseApiController
         return new UserDto
         {
             Username = user.UserName,
-            Token = _tokenService.CreateToken(user),
+            Token = await _tokenService.CreateToken(user),
             KnownAs = user.KnownAs,
             Gender = user.Gender
         };
@@ -51,14 +51,18 @@ public class AccountController : BaseApiController
         
         if (user == null) return Unauthorized("Invalid UserName");
         
-        var rs = await _userRepository.CheckUserLogin(user, loginDto.Password!);
+        var addRs = await _userRepository.CheckUserLogin(user, loginDto.Password!);
         
-        if (!rs) return Unauthorized("Invalid Password");
+        if (!addRs) return Unauthorized("Invalid Password");
+        
+        var roleRs = await _userRepository.AddUserRole(user, "Member");
+        
+        if (!roleRs.Succeeded) return BadRequest(roleRs.Errors);
         
         return new UserDto
         {
             Username = user.UserName,
-            Token = _tokenService.CreateToken(user),
+            Token = await _tokenService.CreateToken(user),
             PhotoUrl = user?.Photos?.FirstOrDefault(x => x.IsMain)?.Url,
             KnownAs = user?.KnownAs,
             Gender = user?.Gender

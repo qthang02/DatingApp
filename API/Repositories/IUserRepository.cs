@@ -16,4 +16,5 @@ public interface IUserRepository
     Task<IdentityResult> AddUser(AppUser user, string password);
     Task<bool> CheckUserLogin(AppUser user, string password);
     Task<AppUser> GetUserByIdAsync(int id);
+    Task<IdentityResult> AddUserRole(AppUser user, string role);
 }
