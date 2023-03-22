@@ -7,12 +7,12 @@ import {
 } from '@angular/common/http';
 import {catchError, Observable} from 'rxjs';
 import {NavigationExtras, Router} from "@angular/router";
-import {MessageService} from "primeng/api";
+import {ToastrService} from "ngx-toastr";
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 
-  constructor(private router: Router, private messageService: MessageService) {}
+  constructor(private router: Router, private toast: ToastrService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(
@@ -29,11 +29,11 @@ export class ErrorInterceptor implements HttpInterceptor {
                 }
                 throw modelStateErrors.flat();
               } else {
-                this.messageService.add({severity:'error', summary: err.status.toString(), detail: err.error});
+                this.toast.error(err.error.message, err.status.toString());
               }
               break;
             case 401:
-              this.messageService.add({severity:'error', summary: err.status.toString(), detail: 'Unauthorised'});
+              this.toast.error(err.error.message, 'Unauthorised');
               break;
             case 404:
               this.router.navigateByUrl('/not-found');
@@ -43,7 +43,7 @@ export class ErrorInterceptor implements HttpInterceptor {
               this.router.navigateByUrl('/server-error', navigationExtras);
               break;
             default:
-              this.messageService.add({severity:'error', summary: 'Error', detail: 'Some Expected Went Wrong'});
+              this.toast.error('Some Expected Went Wrong', 'Error')
               console.log(err);
               break;
           }

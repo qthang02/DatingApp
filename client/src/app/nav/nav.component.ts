@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {AccountService} from "../_services/account.service";
 import {Router} from "@angular/router";
-import {MenuItem, MessageService} from "primeng/api";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-nav',
@@ -10,27 +10,15 @@ import {MenuItem, MessageService} from "primeng/api";
 })
 export class NavComponent {
   model: any = {};
-  item: MenuItem[];
 
-  constructor(public accountService: AccountService, private router: Router, private messageService: MessageService) {
-    this.item = [
-      {
-        label: 'Users',
-        icon:'pi pi-fw pi-user',
-        items: [
-          {label: 'Sign Out', icon: 'pi pi-sign-out', command: (() => this.logout())},
-          {label: 'Edit Profile', icon:'pi pi-user-edit', url: "/member/edit"},
-        ]
-      },
-    ];
-  }
+  constructor(public accountService: AccountService, private router: Router, private toast: ToastrService) {}
 
 
   login(){
     this.accountService.login(this.model).subscribe({
       next:_ => {
         this.router.navigateByUrl('/members');
-        this.messageService.add({severity:'success', summary:'Service Message', detail:'Via MessageService'});
+        this.toast.success('Logged in successfully');
       }
     })
   }

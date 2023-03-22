@@ -13,12 +13,14 @@ public class AccountController : BaseApiController
     private readonly IUserRepository _userRepository;
     private readonly IMapper _mapper;
     private readonly ITokenService _tokenService;
+    private readonly UserManager<AppUser> _userManager;
 
-    public AccountController(IUserRepository userRepository, IMapper mapper, ITokenService tokenService)
+    public AccountController(IUserRepository userRepository, IMapper mapper, ITokenService tokenService, UserManager<AppUser> userManager)
     {
         _userRepository = userRepository;
         _mapper = mapper;
         _tokenService = tokenService;
+        _userManager = userManager;
     }
 
     [HttpPost("register")]
@@ -34,6 +36,10 @@ public class AccountController : BaseApiController
         var rs = await _userRepository.AddUser(user, registerDto.Password);
 
         if (!rs.Succeeded) return BadRequest(rs.Errors);
+        
+        var roleRs = await _userRepository.AddUserRole(user, "Member");
+        
+        if (!roleRs.Succeeded) return BadRequest(roleRs.Errors);
 
         return new UserDto
         {
@@ -54,11 +60,7 @@ public class AccountController : BaseApiController
         var addRs = await _userRepository.CheckUserLogin(user, loginDto.Password!);
         
         if (!addRs) return Unauthorized("Invalid Password");
-        
-        var roleRs = await _userRepository.AddUserRole(user, "Member");
-        
-        if (!roleRs.Succeeded) return BadRequest(roleRs.Errors);
-        
+
         return new UserDto
         {
             Username = user.UserName,

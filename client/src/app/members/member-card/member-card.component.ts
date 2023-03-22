@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {Member} from "../../_models/member";
 import {MemberService} from "../../_services/member.service";
-import {MessageService} from "primeng/api";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-member-card',
@@ -11,12 +11,12 @@ import {MessageService} from "primeng/api";
 export class MemberCardComponent {
   @Input() member: Member | undefined;
 
-  constructor(private memberService: MemberService, private messageService: MessageService) { }
+  constructor(private memberService: MemberService, private toast: ToastrService) { }
 
   addLike(member: Member) {
     this.memberService.addLike(member.userName).subscribe({
       next: () => {
-        this.messageService.add({severity: 'success', summary: 'Success', detail: 'You have liked ' + member.knownAs})
+        this.toast.success('You have liked ' + member.knownAs)
       }
     })
   }

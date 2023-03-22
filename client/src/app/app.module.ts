@@ -24,9 +24,7 @@ import {LoadingInterceptor} from "./_interceptor/loading.interceptor";
 import { NotFoundComponent } from './_errors/not-found/not-found.component';
 import { ServerErrorComponent } from './_errors/server-error/server-error.component';
 import { TestErrorsComponent } from './_errors/test-errors/test-errors.component';
-import {ToastModule} from "primeng/toast";
 import {ErrorInterceptor} from "./_interceptor/error.interceptor";
-import {MessageService} from "primeng/api";
 import {TimeagoModule} from "ngx-timeago";
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
@@ -35,6 +33,9 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import {NgxSpinnerModule} from "ngx-spinner";
 import { MemberMessagesComponent } from './members/member-messages/member-messages.component';
+import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
+import {ToastrModule} from "ngx-toastr";
+import { HasRoleDirective } from './_directives/has-role.directive';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,8 @@ import { MemberMessagesComponent } from './members/member-messages/member-messag
     ServerErrorComponent,
     TestErrorsComponent,
     MemberMessagesComponent,
+    AdminPanelComponent,
+    HasRoleDirective,
   ],
   imports: [
     BrowserModule,
@@ -64,7 +67,6 @@ import { MemberMessagesComponent } from './members/member-messages/member-messag
     BrowserAnimationsModule,
     AppRoutingModule,
     FileUploadModule,
-    ToastModule,
     TimeagoModule.forRoot(),
     ButtonsModule.forRoot(),
     PaginationModule.forRoot(),
@@ -72,12 +74,16 @@ import { MemberMessagesComponent } from './members/member-messages/member-messag
     TabsModule.forRoot(),
     BsDropdownModule.forRoot(),
     NgxSpinnerModule.forRoot({type: 'ball-clip-rotate'}),
+    ToastrModule.forRoot({
+      timeOut: 10000,
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true,
+    })
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true},
-    {provide: MessageService}
   ],
   bootstrap: [AppComponent]
 })
