@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Member} from "../../_models/member";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {TabDirective, TabsetComponent} from "ngx-bootstrap/tabs";
 import {MessageService} from "../../_services/message.service";
 import {Message} from "../../_models/Message";
@@ -21,12 +21,14 @@ export class MemberDetailComponent implements OnInit, OnDestroy{
   user?: User;
 
   constructor(private accountService: AccountService, private route: ActivatedRoute,
-              private messageService: MessageService, public presenceService: PresenceService) {
+              private messageService: MessageService, public presenceService: PresenceService, private router: Router) {
     this.accountService.currentUser$.pipe().subscribe({
       next: user => {
         if(user) this.user = user;
       }
     });
+
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
   }
 
   ngOnInit() {
