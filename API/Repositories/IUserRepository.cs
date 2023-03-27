@@ -12,4 +12,5 @@ public interface IUserRepository
     Task<MemberDto> GetMemberAsync(string username);
     Task<bool> UserExit(string username);
     Task<AppUser> GetUserByIdAsync(int id);
+    Task<string> GetUserGender(string username);
 }
