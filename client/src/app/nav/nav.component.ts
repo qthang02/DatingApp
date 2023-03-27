@@ -19,6 +19,7 @@ export class NavComponent {
       next:_ => {
         this.router.navigateByUrl('/members');
         this.toast.success('Logged in successfully');
+        this.model = {};
       }
     })
   }
