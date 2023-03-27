@@ -33,11 +33,11 @@ public class AccountController : BaseApiController
         user.UserName = registerDto.UserName!.ToLower();
        
         
-        var rs = await _userRepository.AddUser(user, registerDto.Password);
+        var rs = await _userManager.CreateAsync(user, registerDto.Password!);
 
         if (!rs.Succeeded) return BadRequest(rs.Errors);
         
-        var roleRs = await _userRepository.AddUserRole(user, "Member");
+        var roleRs = await _userManager.AddToRoleAsync(user, "Member");
         
         if (!roleRs.Succeeded) return BadRequest(roleRs.Errors);
 
@@ -57,7 +57,7 @@ public class AccountController : BaseApiController
         
         if (user == null) return Unauthorized("Invalid UserName");
         
-        var addRs = await _userRepository.CheckUserLogin(user, loginDto.Password!);
+        var addRs = await _userManager.CheckPasswordAsync(user, loginDto.Password!);
         
         if (!addRs) return Unauthorized("Invalid Password");
 
