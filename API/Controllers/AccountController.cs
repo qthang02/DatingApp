@@ -5,19 +5,18 @@ using API.Services;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers;
 
 public class AccountController : BaseApiController
 {
-    private readonly IUserRepository _userRepository;
     private readonly IMapper _mapper;
     private readonly ITokenService _tokenService;
     private readonly UserManager<AppUser> _userManager;
 
-    public AccountController(IUserRepository userRepository, IMapper mapper, ITokenService tokenService, UserManager<AppUser> userManager)
+    public AccountController(IMapper mapper, ITokenService tokenService, UserManager<AppUser> userManager)
     {
-        _userRepository = userRepository;
         _mapper = mapper;
         _tokenService = tokenService;
         _userManager = userManager;
@@ -26,7 +25,7 @@ public class AccountController : BaseApiController
     [HttpPost("register")]
     public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
     {
-        if (await _userRepository.UserExit(registerDto.UserName!)) return BadRequest("Username is taken");
+        if (await UserExists(registerDto.UserName!)) return BadRequest("Username is taken");
 
         var user = _mapper.Map<AppUser>(registerDto);
 
@@ -53,7 +52,9 @@ public class AccountController : BaseApiController
     [HttpPost("login")]
     public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
     {
-        var user = await _userRepository.GetUserByUsernameAsync(loginDto.UserName!);
+        var user = await _userManager.Users
+            .Include(p => p.Photos)
+            .SingleOrDefaultAsync(x => x.UserName == loginDto.UserName);
         
         if (user == null) return Unauthorized("Invalid UserName");
         
@@ -69,5 +70,10 @@ public class AccountController : BaseApiController
             KnownAs = user?.KnownAs,
             Gender = user?.Gender
         };
+    }
+    
+    private async Task<bool> UserExists(string username)
+    {
+        return await _userManager.Users.AnyAsync(x => x.UserName == username.ToLower());
     }
 }

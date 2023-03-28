@@ -16,6 +16,7 @@ public static class ApplicationServiceExtensions
             opt.UseSqlite(config.GetConnectionString("connectionString"));
         });
         services.AddCors();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<ITokenService, TokenService>();
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
@@ -23,7 +24,6 @@ public static class ApplicationServiceExtensions
         services.AddScoped<LogUserActivity>();
         services.AddSignalR();
         services.AddSingleton<PresenceTracker>();
-        services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         return services;
     }
